@@ -1,29 +1,26 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Script de Deploy ECS - Projeto BIA (Versão Corrigida)
-# Autor: Amazon Q
-# Versão: 1.0.1
-# 
+# Script de Deploy ECS - Projeto BIA
 # Este script automatiza o processo de build e deploy para ECS
 # com versionamento baseado em commit hash para facilitar rollbacks
 
-set -e  # Para o script em caso de erro
+set -e  
 
-# Configurações padrão
+
 DEFAULT_REGION="us-east-1"
 DEFAULT_ECR_REPO="bia"
 DEFAULT_CLUSTER="cluster-bia-alb"
 DEFAULT_SERVICE="service-bia-alb"
 DEFAULT_TASK_FAMILY="task-def-bia-alb"
 
-# Cores para output
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Função para exibir mensagens coloridas
+
 log_info() {
     echo -e "${BLUE}[INFO]${NC} $1"
 }
@@ -40,7 +37,7 @@ log_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
-# Função de ajuda
+
 show_help() {
     cat << EOF
 Script de Deploy ECS - Projeto BIA
@@ -79,7 +76,7 @@ EXAMPLES:
 EOF
 }
 
-# Função para obter o commit hash atual
+
 get_commit_hash() {
     if git rev-parse --git-dir > /dev/null 2>&1; then
         git rev-parse --short=7 HEAD
@@ -89,14 +86,14 @@ get_commit_hash() {
     fi
 }
 
-# Função para fazer login no ECR
+
 ecr_login() {
     local region=$1
     log_info "Fazendo login no ECR..."
     aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $(aws sts get-caller-identity --query Account --output text).dkr.ecr.$region.amazonaws.com
 }
 
-# Função para verificar se o repositório ECR existe
+
 check_ecr_repo() {
     local region=$1
     local repo_name=$2
@@ -109,7 +106,7 @@ check_ecr_repo() {
     fi
 }
 
-# Função para fazer build da imagem
+
 build_image() {
     local tag=$1
     local ecr_uri=$2
@@ -117,13 +114,13 @@ build_image() {
     log_info "Fazendo build da imagem Docker..."
     log_info "Tag: $tag"
     
-    # Build com múltiplas tags
+   
     docker build -t bia-app:$tag -t bia-app:latest -t $ecr_uri:$tag -t $ecr_uri:latest .
     
     log_success "Build concluído com sucesso"
 }
 
-# Função para fazer push da imagem
+
 push_image() {
     local tag=$1
     local ecr_uri=$2
@@ -135,7 +132,7 @@ push_image() {
     log_success "Push concluído com sucesso"
 }
 
-# Função para criar nova task definition
+
 create_task_definition() {
     local region=$1
     local task_family=$2
@@ -144,7 +141,7 @@ create_task_definition() {
     
     log_info "Criando nova task definition..."
     
-    # Obter a task definition atual
+
     local current_task_def=$(aws ecs describe-task-definition --task-definition $task_family --region $region --query 'taskDefinition' --output json 2>/dev/null)
     
     if [ $? -ne 0 ]; then
@@ -152,7 +149,7 @@ create_task_definition() {
         exit 1
     fi
     
-    # Extrair informações necessárias da task definition atual
+  
     local execution_role=$(echo "$current_task_def" | jq -r '.executionRoleArn // empty')
     local task_role=$(echo "$current_task_def" | jq -r '.taskRoleArn // empty')
     local network_mode=$(echo "$current_task_def" | jq -r '.networkMode // "bridge"')
@@ -161,51 +158,50 @@ create_task_definition() {
     local memory=$(echo "$current_task_def" | jq -r '.memory // empty')
     local requires_compatibilities=$(echo "$current_task_def" | jq -c '.requiresCompatibilities // []')
     
-    # Atualizar apenas a imagem no container definition
+
     local container_defs=$(echo "$current_task_def" | jq --arg image "$ecr_uri:$tag" '.containerDefinitions[0].image = $image | .containerDefinitions')
     
     log_info "Registrando nova task definition com imagem: $ecr_uri:$tag"
     
-    # Criar arquivo temporário para container definitions
+
     local temp_file=$(mktemp)
     echo "$container_defs" > "$temp_file"
     
-    # Construir comando AWS CLI
+
     local aws_cmd="aws ecs register-task-definition --region $region --family $task_family --container-definitions file://$temp_file"
-    
-    # Adicionar execution role se existir
+
     if [ ! -z "$execution_role" ] && [ "$execution_role" != "null" ] && [ "$execution_role" != "" ]; then
         aws_cmd="$aws_cmd --execution-role-arn $execution_role"
     fi
     
-    # Adicionar task role se existir
+
     if [ ! -z "$task_role" ] && [ "$task_role" != "null" ] && [ "$task_role" != "" ]; then
         aws_cmd="$aws_cmd --task-role-arn $task_role"
     fi
     
-    # Adicionar network mode se existir
+
     if [ ! -z "$network_mode" ] && [ "$network_mode" != "null" ] && [ "$network_mode" != "" ]; then
         aws_cmd="$aws_cmd --network-mode $network_mode"
     fi
     
-    # Adicionar CPU se existir
+
     if [ ! -z "$cpu" ] && [ "$cpu" != "null" ] && [ "$cpu" != "" ]; then
         aws_cmd="$aws_cmd --cpu $cpu"
     fi
+
     
-    # Adicionar memory se existir
     if [ ! -z "$memory" ] && [ "$memory" != "null" ] && [ "$memory" != "" ]; then
         aws_cmd="$aws_cmd --memory $memory"
     fi
+
     
-    # Adicionar requires compatibilities se existir
     if [ "$requires_compatibilities" != "[]" ] && [ "$requires_compatibilities" != "null" ]; then
         local compat_file=$(mktemp)
         echo "$requires_compatibilities" > "$compat_file"
         aws_cmd="$aws_cmd --requires-compatibilities file://$compat_file"
     fi
     
-    # Adicionar volumes se existirem
+
     if [ "$volumes" != "[]" ] && [ "$volumes" != "null" ]; then
         local volumes_file=$(mktemp)
         echo "$volumes" > "$volumes_file"
@@ -214,12 +210,12 @@ create_task_definition() {
     
     aws_cmd="$aws_cmd --output json"
     
-    # Executar comando e capturar saída
+
     local register_response
     register_response=$(eval $aws_cmd 2>&1)
     local register_exit_code=$?
     
-    # Limpar arquivos temporários
+
     rm -f "$temp_file"
     if [ ! -z "$compat_file" ]; then
         rm -f "$compat_file"
@@ -235,7 +231,7 @@ create_task_definition() {
         exit 1
     fi
     
-    # Extrair o número da revisão da resposta
+
     local new_revision=$(echo "$register_response" | jq -r '.taskDefinition.revision')
     
     if [ "$new_revision" = "null" ] || [ -z "$new_revision" ]; then
@@ -248,7 +244,7 @@ create_task_definition() {
     echo "$new_revision"
 }
 
-# Função para atualizar o serviço ECS
+
 update_service() {
     local region=$1
     local cluster=$2
@@ -285,7 +281,7 @@ update_service() {
     fi
 }
 
-# Função para listar versões disponíveis
+
 list_versions() {
     local region=$1
     local repo_name=$2
@@ -299,7 +295,7 @@ list_versions() {
         --output table
 }
 
-# Função principal de deploy
+
 deploy() {
     local region=$1
     local ecr_repo=$2
@@ -307,7 +303,7 @@ deploy() {
     local service=$4
     local task_family=$5
     
-    # Obter informações necessárias
+
     local commit_hash=$(get_commit_hash)
     local account_id=$(aws sts get-caller-identity --query Account --output text)
     local ecr_uri="$account_id.dkr.ecr.$region.amazonaws.com/$ecr_repo"
@@ -316,19 +312,19 @@ deploy() {
     log_info "Commit Hash: $commit_hash"
     log_info "ECR URI: $ecr_uri"
     
-    # Verificar se o repositório ECR existe
+
     check_ecr_repo $region $ecr_repo
     
-    # Login no ECR
+
     ecr_login $region
     
-    # Build da imagem
+
     build_image $commit_hash $ecr_uri
     
-    # Push da imagem
+ 
     push_image $commit_hash $ecr_uri
     
-    # Criar nova task definition
+
     log_info "Criando nova task definition..."
     local new_revision
     new_revision=$(create_task_definition $region $task_family $ecr_uri $commit_hash)
@@ -341,7 +337,7 @@ deploy() {
     
     log_info "Nova revisão criada: $new_revision"
     
-    # Atualizar serviço
+  
     update_service $region $cluster $service $task_family $new_revision
     
     log_success "Deploy concluído!"
@@ -349,7 +345,7 @@ deploy() {
     log_info "Task Definition: $task_family:$new_revision"
 }
 
-# Função de rollback
+
 rollback() {
     local region=$1
     local ecr_repo=$2
@@ -368,17 +364,17 @@ rollback() {
     
     log_info "Iniciando rollback para versão: $target_tag"
     
-    # Verificar se a imagem existe
+
     if ! aws ecr describe-images --repository-name $ecr_repo --region $region --image-ids imageTag=$target_tag > /dev/null 2>&1; then
         log_error "Imagem com tag '$target_tag' não encontrada no ECR"
         exit 1
     fi
     
-    # Criar nova task definition com a imagem de rollback
+
     local new_revision
     new_revision=$(create_task_definition $region $task_family $ecr_uri $target_tag)
     
-    # Atualizar serviço
+
     update_service $region $cluster $service $task_family $new_revision
     
     log_success "Rollback concluído!"
@@ -386,7 +382,7 @@ rollback() {
     log_info "Task Definition: $task_family:$new_revision"
 }
 
-# Parsing dos argumentos
+
 REGION=$DEFAULT_REGION
 ECR_REPO=$DEFAULT_ECR_REPO
 CLUSTER=$DEFAULT_CLUSTER
@@ -437,14 +433,14 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Verificar se um comando foi especificado
+
 if [ -z "$COMMAND" ]; then
     log_error "Nenhum comando especificado"
     show_help
     exit 1
 fi
 
-# Verificar dependências
+
 if ! command -v aws &> /dev/null; then
     log_error "AWS CLI não encontrado. Instale o AWS CLI primeiro."
     exit 1
@@ -460,7 +456,7 @@ if ! command -v jq &> /dev/null; then
     exit 1
 fi
 
-# Executar comando
+
 case $COMMAND in
     deploy)
         deploy $REGION $ECR_REPO $CLUSTER $SERVICE $TASK_FAMILY
