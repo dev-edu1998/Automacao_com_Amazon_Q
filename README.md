@@ -53,10 +53,12 @@ A aplicação atualizada fica disponível no ambiente em alta disponibilidade.
 
 
 ├── src/                # Código-fonte da aplicação
+&nbsp;
 ├── buildspec.yml       # Instruções de build para o CodeBuild
+&nbsp;
 ├── Dockerfile          # (se aplicável) Imagem para execução da aplicação
+&nbsp;
 ├── README.md           # Documentação do projeto
-├── deploy-ecs.sh       # Script CI/CD
 
 
 &nbsp;
