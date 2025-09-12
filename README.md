@@ -2,7 +2,8 @@
 
 Este projeto foi desenvolvido durante um evento sobre AWS & IA do professor Henrylle Maia, com foco na criação de ambientes em alta disponibilidade na nuvem da AWS, utilizando linguagem natural por meio do Amazon Q.
 
-## 🏗️ Arquitetura da Solução<br>
+## 🏗️ Arquitetura da Solução
+&nbsp;
 
 ![Arquitetura AWS](./AWS-Architecture.png)
 
