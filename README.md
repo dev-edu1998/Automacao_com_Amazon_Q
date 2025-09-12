@@ -18,8 +18,26 @@ Este projeto foi desenvolvido durante um evento sobre AWS & IA do professor Henr
 
 
 
+⚙️ Como Funciona o Deploy
+
+Alterações são feitas no código da aplicação e enviadas para o GitHub.
+
+O pipeline integrado detecta a alteração.
+
+O build e deploy são realizados automaticamente na AWS.
+
+A aplicação atualizada fica disponível no ambiente em alta disponibilidade.
 
 
+
+📂 Estrutura do Repositório
+
+
+├── src/                # Código-fonte da aplicação
+├── buildspec.yml       # Instruções de build para o CodeBuild
+├── Dockerfile          # (se aplicável) Imagem para execução da aplicação
+├── README.md           # Documentação do projeto
+├──
 
 
 #### Para rodar as migrations no container ####
