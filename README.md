@@ -48,6 +48,7 @@ A aplicação atualizada fica disponível no ambiente em alta disponibilidade.
 
 
 &nbsp;
+
 📂 Estrutura do Repositório
 
 
