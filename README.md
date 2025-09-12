@@ -4,7 +4,7 @@ Este projeto foi desenvolvido durante um evento sobre AWS & IA do professor Henr
 
 ## 🏗️ Arquitetura da Solução  
 
-![Arquitetura AWS](./AWS-Architecture.png)
+![Arquitetura AWS](./AWS Architecture.png)
 
 ### Componentes Principais:
 - **Route 53 + ACM** → Gerenciamento de DNS e certificados SSL.  
