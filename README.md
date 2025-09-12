@@ -1,8 +1,14 @@
-## Projeto base para o evento Imersão AWS & IA que irei realizar.
+🚀 **Projeto AWS & IA – Ambiente em Nuvem com Deploy Automatizado**
 
-### Período do evento: 28/07 a 03/08/2025 (Online e ao Vivo às 20h)
+Este projeto foi desenvolvido durante um evento sobre AWS & IA do professor Henrylle Maia, com foco na criação de ambientes em alta disponibilidade na nuvem da AWS, utilizando linguagem natural por meio do Amazon Q.
 
-[>> Página de Inscrição do evento](https://org.imersaoaws.com.br/github/readme)
+
+
+
+
+
+
+
 
 #### Para rodar as migrations no container ####
 ```
