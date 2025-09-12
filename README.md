@@ -37,9 +37,18 @@ A aplicação atualizada fica disponível no ambiente em alta disponibilidade.
 ├── buildspec.yml       # Instruções de build para o CodeBuild
 ├── Dockerfile          # (se aplicável) Imagem para execução da aplicação
 ├── README.md           # Documentação do projeto
-├──
+├── deploy-ecs.sh       # Script CI/CD
 
 
+
+
+✨ Aprendizados
+
+Como utilizar Amazon Q para provisionar recursos AWS usando linguagem natural.
+
+Boas práticas de alta disponibilidade na nuvem.
+
+Integração de CI/CD com GitHub e AWS.
 #### Para rodar as migrations no container ####
 ```
 docker compose exec server bash -c 'npx sequelize db:migrate'
