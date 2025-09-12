@@ -17,8 +17,20 @@ Este projeto foi desenvolvido durante um evento sobre AWS & IA do professor Henr
 - **AI Agent (EC2 Dev)** → Utilizado para auxiliar no desenvolvimento com suporte de IA.  
 
 
+## 🤖 Integração com MCP Server
 
-⚙️ Como Funciona o Deploy
+O ambiente conta com integração ao **MCP Server (Model Context Protocol)**, que atua como um **agente inteligente** conectado à infraestrutura.  
+
+### Funcionalidades do MCP Server:
+- Auxilia no gerenciamento e monitoramento da aplicação em execução.  
+- Permite interações em linguagem natural com os recursos AWS.  
+- Automatiza tarefas de administração e suporte à aplicação.  
+- Facilita troubleshooting e otimiza o fluxo de desenvolvimento.  
+
+Essa integração demonstra como IA + Cloud podem trabalhar em conjunto para aumentar a produtividade e reduzir esforços operacionais.
+
+
+## ⚙️ Como Funciona o Deploy
 
 Alterações são feitas no código da aplicação e enviadas para o GitHub.
 
