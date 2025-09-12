@@ -17,11 +17,11 @@ Este projeto foi desenvolvido durante um evento sobre AWS & IA do professor Henr
 - **GitHub** → Repositório de código integrado ao pipeline.  
 - **AI Agent (EC2 Dev)** → Utilizado para auxiliar no desenvolvimento com suporte de IA.  
 
-
+&nbsp;
 ## 🤖 Integração com MCP Server
 
 O ambiente conta com integração ao **MCP Server (Model Context Protocol)**, que atua como um **agente inteligente** conectado à infraestrutura.  
-
+&nbsp;
 ### Funcionalidades do MCP Server:
 - Auxilia no gerenciamento e monitoramento da aplicação em execução.  
 - Permite interações em linguagem natural com os recursos AWS.  
@@ -30,7 +30,7 @@ O ambiente conta com integração ao **MCP Server (Model Context Protocol)**, qu
 
 Essa integração demonstra como IA + Cloud podem trabalhar em conjunto para aumentar a produtividade e reduzir esforços operacionais.
 
-
+&nbsp;
 ## ⚙️ Como Funciona o Deploy
 
 Alterações são feitas no código da aplicação e enviadas para o GitHub.
@@ -42,7 +42,7 @@ O build e deploy são realizados automaticamente na AWS.
 A aplicação atualizada fica disponível no ambiente em alta disponibilidade.
 
 
-
+&nbsp;
 📂 Estrutura do Repositório
 
 
@@ -53,7 +53,7 @@ A aplicação atualizada fica disponível no ambiente em alta disponibilidade.
 ├── deploy-ecs.sh       # Script CI/CD
 
 
-
+&nbsp;
 
 ✨ Aprendizados
 
@@ -63,7 +63,7 @@ Boas práticas de alta disponibilidade na nuvem.
 
 Integração de CI/CD com GitHub e AWS.
 
-
+&nbsp;
 
 #### Para rodar as migrations no container ####
 ```
