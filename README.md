@@ -52,7 +52,7 @@ A aplicação atualizada fica disponível no ambiente em alta disponibilidade.
 📂 Estrutura do Repositório
 
 
-├── src/                # Código-fonte da aplicação
+├── src/                # Código-fonte da aplicação<br>
 &nbsp;
 ├── buildspec.yml       # Instruções de build para o CodeBuild
 &nbsp;
