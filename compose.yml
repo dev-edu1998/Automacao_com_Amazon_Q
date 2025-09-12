@@ -1,14 +1,6 @@
 services:
   server:
-    build: .
-    container_name: bia
-    ports:
-      - 3001:8080
-    links:
-      - database
     environment:
-      DB_HOST: #host do banco
-      DB_SECRET_NAME: #nome do segredo
-      DB_REGION: #região do banco  
-volumes:
-  db:
+      DB_SECRET_NAME: nome-do-secret
+      DB_REGION: sua-regiao
+      DB_HOST: endereço-do-banco
