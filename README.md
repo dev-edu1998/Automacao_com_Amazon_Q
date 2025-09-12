@@ -3,8 +3,8 @@
 Este projeto foi desenvolvido durante um evento sobre AWS & IA do professor Henrylle Maia, com foco na criação de ambientes em alta disponibilidade na nuvem da AWS, utilizando linguagem natural por meio do Amazon Q.
 
 ## 🏗️ Arquitetura da Solução  
-
-![Arquitetura AWS](./AWS-Architecture.png)<br>
+<br>
+![Arquitetura AWS](./AWS-Architecture.png)
 
 ### Componentes Principais:
 - **Route 53 + ACM** → Gerenciamento de DNS e certificados SSL.  
