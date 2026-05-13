@@ -1,4 +1,4 @@
-# 🚀 BIA – Deploy Automatizado na AWS com Amazon Q
+# 🚀 Deploy Automatizado na AWS com Amazon Q
 
 <p align="left">
   <img src="https://img.shields.io/badge/AWS-ECS%20%7C%20ECR%20%7C%20ALB%20%7C%20RDS-FF9900?style=flat&logo=amazonaws&logoColor=white" />
