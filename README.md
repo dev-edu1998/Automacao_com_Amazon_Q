@@ -7,7 +7,6 @@
   <img src="https://img.shields.io/badge/Docker-ECR-2496ED?style=flat&logo=docker&logoColor=white" />
   <img src="https://img.shields.io/badge/CI%2FCD-CodePipeline%20%7C%20CodeBuild-232F3E?style=flat&logo=amazonaws&logoColor=white" />
   <img src="https://img.shields.io/badge/Amazon%20Q-AI%20Agent-8A2BE2?style=flat&logo=amazonaws&logoColor=white" />
-  <img src="https://img.shields.io/badge/Licença-MIT-green?style=flat" />
 </p>
 
 Projeto desenvolvido durante o evento **AWS & IA** do professor Henrylle Maia, com foco na criação de ambientes em **alta disponibilidade na AWS** utilizando **linguagem natural via Amazon Q Developer**.
