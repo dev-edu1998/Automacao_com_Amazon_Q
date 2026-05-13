@@ -1,80 +1,106 @@
-🚀 **Projeto AWS & IA – Ambiente em Nuvem com Deploy Automatizado**
+# AWS High Availability Environment with AI-Assisted Automation
 
-Este projeto foi desenvolvido durante um evento sobre AWS & IA do professor Henrylle Maia, com foco na criação de ambientes em alta disponibilidade na nuvem da AWS, utilizando linguagem natural por meio do Amazon Q.
-&nbsp;
+![AWS](https://img.shields.io/badge/AWS-Cloud-orange)
+![Docker](https://img.shields.io/badge/Docker-Containers-blue)
+![CI/CD](https://img.shields.io/badge/CI/CD-Automation-green)
+![Amazon Q](https://img.shields.io/badge/AmazonQ-AI-purple)
+![ECS](https://img.shields.io/badge/AWS-ECS-ff9900)
+![RDS](https://img.shields.io/badge/AWS-RDS-blue)
 
-Pré-requisitos para rodar:
-Docker, AWS CLI, Permissões IAM
- 
-&nbsp;
-## 🏗️ Arquitetura da Solução
-&nbsp;
+## Overview
 
-![Arquitetura AWS](./AWS-Architecture.png)
+This project demonstrates the implementation of a cloud-native AWS environment designed with high availability principles, automated CI/CD pipelines, containerized workloads, and AI-assisted infrastructure provisioning using Amazon Q.
 
-### Componentes Principais:
-- **Route 53 + ACM** → Gerenciamento de DNS e certificados SSL.  
-- **ALB (Application Load Balancer)** → Distribuição de tráfego entre instâncias.  
-- **ECS Cluster (EC2)** → Execução dos containers da aplicação.  
-- **ECR** → Armazenamento das imagens Docker.  
-- **RDS Multi-AZ** → Banco de dados relacional com alta disponibilidade.  
-- **CodePipeline** → Automatização de build e deploy contínuo.  
-- **GitHub** → Repositório de código integrado ao pipeline.  
-- **AI Agent (EC2 Dev)** → Utilizado para auxiliar no desenvolvimento com suporte de IA.  
+The environment was developed during an AWS & AI event led by Henrylle Maia, focusing on modern DevOps practices, scalability, automation, and cloud infrastructure management using natural language interactions with AWS services.
 
-&nbsp;
-## 🤖 Integração com MCP Server
+Although Amazon Q was used to accelerate infrastructure provisioning and workflow automation, all generated solutions were manually validated, adapted, and integrated based on prior knowledge of Cloud Computing, Linux administration, and DevOps concepts.
 
-O ambiente conta com integração ao **MCP Server (Model Context Protocol)**, que atua como um **agente inteligente** conectado à infraestrutura.  
-&nbsp;
-### Funcionalidades do MCP Server:
-- Auxilia no gerenciamento e monitoramento da aplicação em execução.  
-- Permite interações em linguagem natural com os recursos AWS.  
-- Automatiza tarefas de administração e suporte à aplicação.  
-- Facilita troubleshooting e otimiza o fluxo de desenvolvimento.  
+---
 
-Essa integração demonstra como IA + Cloud podem trabalhar em conjunto para aumentar a produtividade e reduzir esforços operacionais.
+## Features
 
-&nbsp;
-## ⚙️ Como Funciona o Deploy
+- High Availability AWS Architecture
+- Automated CI/CD Pipeline
+- Dockerized Application Deployment
+- ECS Cluster Running on EC2
+- Multi-AZ Relational Database
+- Load Balancing with SSL Termination
+- AI-Assisted Infrastructure Provisioning
+- GitHub Integration with AWS Services
+- Natural Language Cloud Operations Support
 
-Alterações são feitas no código da aplicação e enviadas para o GitHub.
+---
 
-O pipeline integrado detecta a alteração.
+# Architecture
 
-O build e deploy são realizados automaticamente na AWS.
+![AWS Architecture](./AWS-Architecture.png)
 
-A aplicação atualizada fica disponível no ambiente em alta disponibilidade.
+---
 
+## Architecture Components
 
-&nbsp;
+### Route 53 + ACM
+Responsible for DNS management and SSL certificate provisioning.
 
-📂 Estrutura do Repositório
+### Application Load Balancer (ALB)
+Distributes incoming traffic between application instances, improving availability and resilience.
 
+### ECS Cluster (EC2 Launch Type)
+Runs the containerized application within an ECS cluster using EC2 instances.
 
-├── src/                # Código-fonte da aplicação<br>
-&nbsp;
-├── buildspec.yml       # Instruções de build para o CodeBuild<br>
-&nbsp;
-├── Dockerfile          # Imagem para execução da aplicação<br>
-&nbsp;
-├── README.md           # Documentação do projeto
+### Amazon ECR
+Stores Docker container images used during the deployment process.
 
+### Amazon RDS Multi-AZ
+Provides a highly available relational database setup with automatic failover capabilities.
 
-&nbsp;
+### AWS CodePipeline
+Automates the build and deployment workflow, enabling continuous integration and delivery.
 
-✨ Aprendizados
+### GitHub Repository
+Acts as the source control platform integrated with the CI/CD pipeline.
 
-Como utilizar Amazon Q para provisionar recursos AWS usando linguagem natural.
+### AI Agent (Development EC2)
+Environment used alongside Amazon Q to assist with infrastructure provisioning, automation, and operational workflows.
 
-Boas práticas de alta disponibilidade na nuvem.
+---
 
-Integração de CI/CD com GitHub e AWS.
+# AI-Assisted Infrastructure Management
 
-&nbsp;
+This project integrates an MCP Server (Model Context Protocol) acting as an intelligent operational assistant connected to the AWS infrastructure.
 
-#### Para rodar as migrations no container ####
-```
-docker compose exec server bash -c 'npx sequelize db:migrate'
-```
+The integration enables:
 
+- Natural language interactions with AWS resources
+- Operational troubleshooting assistance
+- Environment monitoring support
+- Infrastructure management automation
+- Productivity improvements during development workflows
+- Faster operational tasks execution
+
+This demonstrates how AI and Cloud Computing can work together to improve operational efficiency and reduce manual overhead.
+
+---
+
+# Deployment Workflow
+
+The deployment process follows an automated CI/CD workflow:
+
+1. Code changes are pushed to GitHub
+2. AWS CodePipeline detects repository updates
+3. Build stage is triggered automatically
+4. Docker image is generated and stored in Amazon ECR
+5. ECS services are updated automatically
+6. Application becomes available through the Load Balancer
+
+This workflow reduces manual intervention and simulates production-oriented DevOps practices.
+
+---
+
+# Repository Structure
+
+```bash
+├── src/                # Application source code
+├── buildspec.yml       # AWS CodeBuild instructions
+├── Dockerfile          # Container image definition
+├── README.md           # Project documentation
