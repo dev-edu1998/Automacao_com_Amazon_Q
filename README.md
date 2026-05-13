@@ -227,8 +227,4 @@ Verifique se o webhook do GitHub está configurado corretamente no CodePipeline 
 - Integração de **MCP Server** como camada de IA sobre infraestrutura de produção
 - Versionamento de imagens Docker por **commit hash** para rastreabilidade de deploys
 
-Este projeto está sob a licença [MIT](LICENSE).
-
----
-
 <p align="center">Desenvolvido durante o evento AWS & IA com o professor <a href="https://www.linkedin.com/in/henryllemaia/">Henrylle Maia</a></p>
