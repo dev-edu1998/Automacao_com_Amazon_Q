@@ -1,106 +1,239 @@
-# AWS High Availability Environment with AI-Assisted Automation
+# 🚀 BIA – Deploy Automatizado na AWS com Amazon Q
 
-![AWS](https://img.shields.io/badge/AWS-Cloud-orange)
-![Docker](https://img.shields.io/badge/Docker-Containers-blue)
-![CI/CD](https://img.shields.io/badge/CI/CD-Automation-green)
-![Amazon Q](https://img.shields.io/badge/AmazonQ-AI-purple)
-![ECS](https://img.shields.io/badge/AWS-ECS-ff9900)
-![RDS](https://img.shields.io/badge/AWS-RDS-blue)
+<p align="left">
+  <img src="https://img.shields.io/badge/AWS-ECS%20%7C%20ECR%20%7C%20ALB%20%7C%20RDS-FF9900?style=flat&logo=amazonaws&logoColor=white" />
+  <img src="https://img.shields.io/badge/Node.js-22--slim-339933?style=flat&logo=nodedotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-Vite-61DAFB?style=flat&logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/Docker-ECR-2496ED?style=flat&logo=docker&logoColor=white" />
+  <img src="https://img.shields.io/badge/CI%2FCD-CodePipeline%20%7C%20CodeBuild-232F3E?style=flat&logo=amazonaws&logoColor=white" />
+  <img src="https://img.shields.io/badge/Amazon%20Q-AI%20Agent-8A2BE2?style=flat&logo=amazonaws&logoColor=white" />
+  <img src="https://img.shields.io/badge/Licença-MIT-green?style=flat" />
+</p>
 
-## Overview
+Projeto desenvolvido durante o evento **AWS & IA** do professor Henrylle Maia, com foco na criação de ambientes em **alta disponibilidade na AWS** utilizando **linguagem natural via Amazon Q Developer**.
 
-This project demonstrates the implementation of a cloud-native AWS environment designed with high availability principles, automated CI/CD pipelines, containerized workloads, and AI-assisted infrastructure provisioning using Amazon Q.
-
-The environment was developed during an AWS & AI event led by Henrylle Maia, focusing on modern DevOps practices, scalability, automation, and cloud infrastructure management using natural language interactions with AWS services.
-
-Although Amazon Q was used to accelerate infrastructure provisioning and workflow automation, all generated solutions were manually validated, adapted, and integrated based on prior knowledge of Cloud Computing, Linux administration, and DevOps concepts.
-
----
-
-## Features
-
-- High Availability AWS Architecture
-- Automated CI/CD Pipeline
-- Dockerized Application Deployment
-- ECS Cluster Running on EC2
-- Multi-AZ Relational Database
-- Load Balancing with SSL Termination
-- AI-Assisted Infrastructure Provisioning
-- GitHub Integration with AWS Services
-- Natural Language Cloud Operations Support
+A aplicação **BIA** é provisionada, construída e entregue automaticamente a cada push no GitHub — sem intervenção manual — graças a um pipeline completo de CI/CD integrado ao ECS, ECR, ALB e RDS.
 
 ---
 
-# Architecture
+## 📐 Arquitetura da Solução
 
-![AWS Architecture](./AWS-Architecture.png)
+![Arquitetura AWS](./AWS-Architecture.png)
 
----
-
-## Architecture Components
-
-### Route 53 + ACM
-Responsible for DNS management and SSL certificate provisioning.
-
-### Application Load Balancer (ALB)
-Distributes incoming traffic between application instances, improving availability and resilience.
-
-### ECS Cluster (EC2 Launch Type)
-Runs the containerized application within an ECS cluster using EC2 instances.
-
-### Amazon ECR
-Stores Docker container images used during the deployment process.
-
-### Amazon RDS Multi-AZ
-Provides a highly available relational database setup with automatic failover capabilities.
-
-### AWS CodePipeline
-Automates the build and deployment workflow, enabling continuous integration and delivery.
-
-### GitHub Repository
-Acts as the source control platform integrated with the CI/CD pipeline.
-
-### AI Agent (Development EC2)
-Environment used alongside Amazon Q to assist with infrastructure provisioning, automation, and operational workflows.
+| Componente | Função |
+|---|---|
+| **Route 53 + ACM** | Gerenciamento de DNS e certificados SSL |
+| **ALB (Application Load Balancer)** | Distribuição de tráfego entre instâncias ECS |
+| **ECS Cluster (EC2)** | Execução dos containers da aplicação BIA |
+| **ECR** | Armazenamento e versionamento das imagens Docker |
+| **RDS Multi-AZ** | Banco de dados relacional com alta disponibilidade |
+| **CodePipeline + CodeBuild** | Automação completa de build e deploy contínuo |
+| **GitHub** | Repositório de código — gatilho do pipeline |
+| **Amazon Q + MCP Server** | Agente de IA para provisionamento e gestão via linguagem natural |
 
 ---
 
-# AI-Assisted Infrastructure Management
+## 🤖 Amazon Q em Ação
 
-This project integrates an MCP Server (Model Context Protocol) acting as an intelligent operational assistant connected to the AWS infrastructure.
+O grande diferencial deste projeto é a utilização do **Amazon Q Developer** com suporte ao **MCP Server (Model Context Protocol)** para provisionar e gerenciar recursos AWS usando linguagem natural.
 
-The integration enables:
+**Exemplos de comandos usados durante o projeto:**
 
-- Natural language interactions with AWS resources
-- Operational troubleshooting assistance
-- Environment monitoring support
-- Infrastructure management automation
-- Productivity improvements during development workflows
-- Faster operational tasks execution
+```
+"Crie um ECS Cluster com 2 instâncias EC2 em us-east-1 com alta disponibilidade"
+"Configure um ALB apontando para o target group do ECS"
+"Crie um RDS PostgreSQL Multi-AZ com failover automático"
+"Configure o CodePipeline integrado ao repositório GitHub para deploy automático"
+```
 
-This demonstrates how AI and Cloud Computing can work together to improve operational efficiency and reduce manual overhead.
+**O MCP Server permite:**
+- Interações em linguagem natural com os recursos AWS
+- Monitoramento e gerenciamento da aplicação em execução
+- Automação de tarefas de administração e suporte
+- Troubleshooting acelerado com contexto de infraestrutura
 
----
-
-# Deployment Workflow
-
-The deployment process follows an automated CI/CD workflow:
-
-1. Code changes are pushed to GitHub
-2. AWS CodePipeline detects repository updates
-3. Build stage is triggered automatically
-4. Docker image is generated and stored in Amazon ECR
-5. ECS services are updated automatically
-6. Application becomes available through the Load Balancer
-
-This workflow reduces manual intervention and simulates production-oriented DevOps practices.
+> 💡 Essa integração demonstra como IA + Cloud podem trabalhar em conjunto para aumentar produtividade e reduzir esforço operacional.
 
 ---
 
-# Repository Structure
+## ⚙️ Como Funciona o Pipeline de CI/CD
+
+```
+Push no GitHub
+      │
+      ▼
+ CodePipeline detecta alteração
+      │
+      ▼
+ CodeBuild executa buildspec.yml
+  ├── Login no ECR
+  ├── docker build (Node 22 + Vite)
+  ├── docker push (tag: latest + commit hash)
+  └── Gera imagedefinitions.json
+      │
+      ▼
+ ECS atualiza o serviço com a nova imagem
+      │
+      ▼
+ ALB distribui o tráfego para os containers atualizados
+      │
+      ▼
+ Aplicação disponível em https://labs.cloudopspro.tech
+```
+
+Cada deploy é **rastreável por commit hash**, permitindo rollback rápido para qualquer versão anterior.
+
+---
+
+## 🏗️ Stack Técnica
+
+- **Backend:** Node.js 22, Sequelize ORM
+- **Frontend:** React + Vite
+- **Containerização:** Docker (imagem base `node:22-slim`)
+- **Registry:** Amazon ECR
+- **Orquestração:** Amazon ECS (EC2)
+- **Banco de dados:** RDS Multi-AZ (PostgreSQL/MySQL)
+- **CI/CD:** AWS CodePipeline + CodeBuild
+- **Balanceamento:** Application Load Balancer
+- **DNS/SSL:** Route 53 + ACM
+- **IA:** Amazon Q Developer + MCP Server
+
+---
+
+## 📋 Pré-requisitos
+
+Antes de começar, certifique-se de ter instalado e configurado:
+
+- [Docker](https://docs.docker.com/get-docker/) (v20+)
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) (v2) configurado com `aws configure`
+- Node.js 18+ (para rodar localmente)
+- Conta AWS com as seguintes permissões IAM:
+  - `AmazonECS_FullAccess`
+  - `AmazonEC2ContainerRegistryFullAccess`
+  - `AmazonRDSFullAccess`
+  - `ElasticLoadBalancingFullAccess`
+  - `AWSCodePipelineFullAccess`
+  - `AWSCodeBuildAdminAccess`
+
+---
+
+## 🚀 Como Executar
+
+### 1. Clonar o repositório
 
 ```bash
-├── src/                # Application source code
-├── buildspec.yml       # AWS CodeBuild instructions
-├── Dockerfile          # Container image definition
-├── README.md           # Project documentation
+git clone https://github.com/dev-edu1998/Automacao_com_Amazon_Q.git
+cd Automacao_com_Amazon_Q
+```
+
+### 2. Configurar variáveis de ambiente
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```env
+# AWS
+AWS_REGION=us-east-1
+AWS_ACCOUNT_ID=sua-account-id
+ECR_REPOSITORY=sua-account-id.dkr.ecr.us-east-1.amazonaws.com/bia
+
+# Aplicação
+VITE_API_URL=https://seu-dominio.com
+PORT=8080
+
+# Banco de dados
+DB_HOST=seu-rds-endpoint
+DB_PORT=5432
+DB_NAME=seu-banco
+DB_USER=seu-usuario
+DB_PASS=sua-senha
+```
+
+### 3. Rodar localmente com Docker
+
+```bash
+# Build da imagem
+docker build -t bia:local .
+
+# Subir o container
+docker compose up -d
+```
+
+### 4. Rodar as migrations do banco
+
+```bash
+docker compose exec server bash -c 'npx sequelize db:migrate'
+```
+
+### 5. Acessar a aplicação
+
+```
+http://localhost:8080
+```
+
+---
+
+## 🔐 Variáveis de Ambiente do CodeBuild
+
+No console do AWS CodeBuild, configure as seguintes variáveis de ambiente no projeto de build:
+
+| Variável | Descrição |
+|---|---|
+| `AWS_ACCOUNT_ID` | ID da sua conta AWS |
+| `AWS_DEFAULT_REGION` | Região do deploy (ex: `us-east-1`) |
+| `VITE_API_URL` | URL pública da API |
+
+> ⚠️ **Nunca commite IDs de conta AWS ou credenciais diretamente no código.** Use variáveis de ambiente do CodeBuild ou o AWS Secrets Manager.
+
+---
+
+## 📂 Estrutura do Repositório
+
+```
+Automacao_com_Amazon_Q/
+├── client/               # Frontend React + Vite
+│   ├── package.json
+│   └── src/
+├── src/                  # Backend Node.js
+│   └── ...
+├── buildspec.yml         # Instruções de build para o CodeBuild
+├── Dockerfile            # Imagem Docker da aplicação
+├── docker-compose.yml    # Configuração para ambiente local
+├── AWS-Architecture.png  # Diagrama da arquitetura
+└── README.md
+```
+
+---
+
+## 🔧 Troubleshooting
+
+**Erro de login no ECR:**
+```bash
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <sua-account-id>.dkr.ecr.us-east-1.amazonaws.com
+```
+Verifique se as permissões IAM incluem `ecr:GetAuthorizationToken`.
+
+**Container não sobe localmente:**
+Confirme que as variáveis do `.env` estão preenchidas corretamente, especialmente `DB_HOST` e `DB_PORT`.
+
+**Pipeline não dispara após push:**
+Verifique se o webhook do GitHub está configurado corretamente no CodePipeline e se o branch monitorado é o correto (`main` ou `master`).
+
+---
+
+## ✨ Aprendizados
+
+- Como provisionar recursos AWS usando **linguagem natural com Amazon Q**
+- Boas práticas de **alta disponibilidade** com ECS Multi-AZ e RDS Multi-AZ
+- Construção de **pipelines CI/CD** com CodePipeline e CodeBuild
+- Integração de **MCP Server** como camada de IA sobre infraestrutura de produção
+- Versionamento de imagens Docker por **commit hash** para rastreabilidade de deploys
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença [MIT](LICENSE).
+
+---
+
+<p align="center">Desenvolvido durante o evento AWS & IA com o professor <a href="https://www.linkedin.com/in/henryllemaia/">Henrylle Maia</a></p>
