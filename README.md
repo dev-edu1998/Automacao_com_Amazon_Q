@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/Amazon%20Q-ECS%20MCP%20Server-8A2BE2?style=flat&logo=amazonaws&logoColor=white" />
 </p>
 
-Projeto desenvolvido durante o evento **AWS & IA** do professor Henrylle Maia (28/07 a 03/08/2025), com foco na criação de ambientes na AWS utilizando **linguagem natural via Amazon Q Developer**.
+Projeto desenvolvido durante o evento **AWS & IA** do professor Henrylle Maia, com foco na criação de ambientes na AWS utilizando **linguagem natural via Amazon Q Developer**.
 
 A aplicação **BIA** é provisionada, construída e entregue automaticamente a cada push no GitHub — sem intervenção manual — graças a um pipeline completo de CI/CD integrado ao ECS, ECR, ALB e RDS.
 
