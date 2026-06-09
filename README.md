@@ -89,7 +89,7 @@ Cada deploy é **rastreável por commit hash**, permitindo rollback rápido para
 
 ---
 
-## 🏗️ Stack Técnica
+## 🏗️ Stack
 
 - **Backend:** Node.js 22, Express, Sequelize ORM
 - **Frontend:** React + Vite
